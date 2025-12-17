@@ -1,6 +1,8 @@
 import { upsertStreamUser } from "../lib/stream.js";
 import User from "../models/User.models.js";
 import jwt from "jsonwebtoken";
+
+
 export async function signup(req, res) {
   const { email, password, fullName } = req.body;
   try {
@@ -122,7 +124,7 @@ export async function onboard(req, res) {
           !nativeLanguage && "nativeLanguage",
           !learningLanguage && "learningLanguage",
           !location && "location",
-        ],
+        ].filter(Boolean),
       });
     }
 
@@ -137,6 +139,19 @@ export async function onboard(req, res) {
 
     if (!updatedUser)
       return res.status(404).json({ message: "User not found" });
+
+    try {
+      await upsertStreamUser({
+        id: updatedUser._id.toString(),
+        name: updatedUser.fullName,
+        image: updatedUser.profilePic || "",
+      });
+      console.log(
+        `stream user updated after onboarding for ${updatedUser.fullName}`
+      );
+    } catch (stremError) {
+      console.log("error updating stream user during onboarding", stremError);
+    }
 
     res.status(200).json({ success: true, user: updatedUser });
   } catch (error) {
