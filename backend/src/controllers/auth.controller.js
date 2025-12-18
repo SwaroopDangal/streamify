@@ -2,7 +2,6 @@ import { upsertStreamUser } from "../lib/stream.js";
 import User from "../models/User.models.js";
 import jwt from "jsonwebtoken";
 
-
 export async function signup(req, res) {
   const { email, password, fullName } = req.body;
   try {
@@ -26,8 +25,8 @@ export async function signup(req, res) {
         .status(400)
         .json({ message: "Email already exists, please use a diffrent one" });
     }
-    const idx = Math.floor(Math.random() * 100) + 1; // generate a num between 1-100
-    const randomAvatar = `https://avatar.iran.liara.run/public/${idx}.png`;
+    const idx = Math.floor(Math.random() * 1000) + 1; // generate a num between 1-100
+    const randomAvatar = `https://testingbot.com/free-online-tools/random-avatar/${idx}`;
 
     const newUser = await User.create({
       fullName,
