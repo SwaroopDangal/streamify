@@ -1,9 +1,9 @@
 import React from "react";
 import useAuthUser from "../hooks/useAuthUser";
 import { Link, useLocation } from "react-router";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "../lib/api";
-import { LogOutIcon, ShipWheelIcon } from "lucide-react";
+import { BellIcon, LogOutIcon, ShipWheelIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 
 const Navbar = () => {
