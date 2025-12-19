@@ -44,10 +44,10 @@ export async function sendFriendRequest(req, res) {
       return res
         .status(400)
         .json({ message: "You can't send friend request to yourself" });
-    const recipient = User.findById(recipientId);
+    const recipient = await User.findById(recipientId);
     if (!recipient)
       return res.status(404).json({ message: "Reciepent not found" });
-    if (recipient.friends.includes(myId)) {
+    if (recipient.friends?.includes(myId)) {
       return res.status(400).json({ message: "You are already friends" });
     }
 
