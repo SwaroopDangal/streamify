@@ -18,6 +18,7 @@ import { capitialize } from "../lib/utils";
 
 import FriendCard, { getLanguageFlag } from "../components/FriendCard";
 import NoFriendsFound from "../components/NoFriendsFound";
+import toast from "react-hot-toast";
 
 const HomePage = () => {
   const queryClient = useQueryClient();
@@ -42,6 +43,9 @@ const HomePage = () => {
     mutationFn: sendFriendRequest,
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["outgoingFriendReqs"] }),
+    onError: (error) => {
+      toast.error(error.response.data.message);
+    },
   });
 
   useEffect(() => {
